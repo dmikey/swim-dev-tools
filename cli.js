@@ -41,32 +41,42 @@ var globalConfig = {
 
     // we need source maps
     devtool: "source-map",
-
-    // we're sending all these loaders with this one dev tool install
-    loaders: [{
-            test: /\.css$/,
-            loader: ['style-loader', 'css-loader']
-        },
-        {
-            test: /\.html$/,
-            loader: 'html',
-            query: {
-                minimize: true
+    module: {
+        // we're sending all these loaders with this one dev tool install
+        loaders: [{
+                test: /\.json$/,
+                loader: "json",
+                include: cwd
+            }, {
+                test: /\.css$/,
+                loader: ['style-loader', 'css-loader']
+            },
+            {
+                test: /\.html$/,
+                loader: 'html',
+                query: {
+                    minimize: true
+                }
+            },
+            {
+                test: /\.less$/,
+                use: [
+                    'style-loader',
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            importLoaders: 1
+                        }
+                    },
+                    'less-loader'
+                ]
+            },
+            {
+                test: /\.scss$/,
+                loaders: ["style-loader", "css-loader", "sass-loader"]
             }
-        },
-        {
-            test: /\.less$/,
-            use: [
-            'style-loader',
-            { loader: 'css-loader', options: { importLoaders: 1 } },
-            'less-loader'
-            ]
-        },
-        {
-            test: /\.scss$/,
-            loaders: ["style-loader", "css-loader", "sass-loader"]
-        }],
-
+        ],
+    },
     // plugins to help run our dev tool
     plugins: [
         new HtmlWebpackPlugin(),
@@ -83,7 +93,9 @@ var globalConfig = {
             mangle: true,
             sourcemap: true
         }),
-    ]
+    ],
+
+
 };
 
 // build a swim project
