@@ -7,9 +7,9 @@ Swim CLI, the easiest way to build Swim Apps.
 This tool currently supports 
 
 - [x] Web
-- [] Android (java)
-- [] iOS (xcode)
-- [] Other
+- [ ] Android (java)
+- [ ] iOS (xcode)
+- [ ] Other
 
 ## features
 
