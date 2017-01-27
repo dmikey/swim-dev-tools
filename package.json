@@ -7,24 +7,29 @@
     "swim-dev": "cli.js"
   },
   "dependencies": {
-    "Polymer": "^1.6.1--",
     "babel-core": "^6.22.1",
     "babel-loader": "^6.2.10",
     "baggage-loader": "^0.2.4",
     "base64-image-loader": "^1.2.0",
     "blargs": "^0.2.0",
     "bower-webpack-plugin": "^0.1.9",
+    "copy-webpack-plugin": "^4.0.1",
     "css-loader": "^0.26.1",
     "html-loader": "^0.4.4",
     "html-webpack-plugin": "^2.26.0",
+    "jquery": "^3.1.1",
     "json-loader": "^0.5.4",
-    "npm-polymer-elements": "0.0.1",
-    "polymer-ext": "^1.2.2",
+    "less": "^2.7.2",
+    "less-loader": "^2.2.3",
+    "lodash": "^4.17.4",
     "shelljs": "^0.7.6",
     "source-map": "^0.5.6",
     "style-loader": "^0.13.1",
+    "swim-client-js": "^0.4.8",
     "webpack": "^1.14.0",
-    "webpack-dev-server": "^1.16.2"
+    "webpack-dev-server": "^1.16.2",
+    "x-tag": "^1.5.11",
+    "xml-loader": "^1.1.0"
   },
   "devDependencies": {},
   "scripts": {

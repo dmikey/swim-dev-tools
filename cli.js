@@ -1,102 +1,24 @@
 #! /usr/bin/env node
+global.cwd = process.cwd();
 
+// node modules to run this tools
 var fs = require('fs');
 var path = require('path');
 var blargs = require('blargs').default;
 var webpack = require('webpack');
 var WebpackDevServer = require('webpack-dev-server');
-var ret = blargs();
-var args = ret[0];
-var positionals = ret[1];
-var next = ret[2];
-var cwd = process.cwd();
-var projectPackage = require(cwd + '/package.json');
-var BowerWebpackPlugin = require('bower-webpack-plugin');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-
 
 // global webpack config used for swim projects
-var globalConfig = {
+var globalConfig = require('./config');
 
-    // set the context to that of the app we are building
-    context: cwd,
+// todo: check if package.json exists, we need to setup an
+// init command path anyway
+// project files we need to know about
+var projectPackage = require(cwd + '/package.json');
 
-    // for now we set one entry for the main package.json entry
-    entry: {
-        app: ['./' + projectPackage.main]
-    },
-
-    // default to build and app.min.js for now
-    output: {
-        path: cwd + '/build/',
-        filename: "app.min.js"
-    },
-
-    // ensure we resolve loaders in our dev tool, and not just in the project
-    resolveLoader: {
-        modulesDirectories: [
-            __dirname + '/node_modules'
-        ]
-    },
-
-    // we need source maps
-    devtool: "source-map",
-    module: {
-        // we're sending all these loaders with this one dev tool install
-        loaders: [{
-                test: /\.json$/,
-                loader: "json",
-                include: cwd
-            }, {
-                test: /\.css$/,
-                loader: ['style-loader', 'css-loader']
-            },
-            {
-                test: /\.html$/,
-                loader: 'html',
-                query: {
-                    minimize: true
-                }
-            },
-            {
-                test: /\.less$/,
-                use: [
-                    'style-loader',
-                    {
-                        loader: 'css-loader',
-                        options: {
-                            importLoaders: 1
-                        }
-                    },
-                    'less-loader'
-                ]
-            },
-            {
-                test: /\.scss$/,
-                loaders: ["style-loader", "css-loader", "sass-loader"]
-            }
-        ],
-    },
-    // plugins to help run our dev tool
-    plugins: [
-        new HtmlWebpackPlugin(),
-        new BowerWebpackPlugin({
-            modulesDirectories: ["bower_components"],
-            manifestFiles: "bower.json",
-            includes: /.*/,
-            excludes: [],
-            searchResolveModulesDirectories: true
-        }),
-        new webpack.optimize.DedupePlugin(),
-        new webpack.optimize.OccurenceOrderPlugin(),
-        new webpack.optimize.UglifyJsPlugin({
-            mangle: true,
-            sourcemap: true
-        }),
-    ],
-
-
-};
+// capture some stuff about our command environment from the CLI
+var ret = blargs();
+var args = ret[0];
 
 // build a swim project
 if (args.build === true) {
@@ -108,6 +30,14 @@ if (args.build === true) {
         return;
     }
 
+    globalConfig.plugins.push(new webpack.optimize.DedupePlugin());
+    globalConfig.plugins.push(new webpack.optimize.OccurenceOrderPlugin());
+
+    globalConfig.plugins.push(new webpack.optimize.UglifyJsPlugin({
+            mangle: true,
+            sourcemap: true
+    }));
+        
     webpack(globalConfig, function (err, stats) {
         if (err) return handleError(err);
         console.log('Build Finished...');
