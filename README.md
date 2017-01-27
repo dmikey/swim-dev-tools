@@ -13,14 +13,14 @@ This tool currently supports
 
 ## features
 
--[x] Supports LESS
--[x] Supports SASS
--[x] Generates `index.html` Fixture from EJS
--[x] Packages Bower modules using 'require'
--[x] Packages NPM modules
--[x] Supports a number of loader formats out of the box (raw, image, style)
--[x] Self contained dependencies, build tools do not need to mingle with your project
--[x] Dev server with Hot Reload (no browser refresh)
+- [x] Supports LESS
+- [x] Supports SASS
+- [x] Generates `index.html` Fixture from EJS
+- [x] Packages Bower modules using 'require'
+- [x] Packages NPM modules
+- [x] Supports a number of loader formats out of the box (raw, image, style)
+- [x] Self contained dependencies, build tools do not need to mingle with your project
+- [x] Dev server with Hot Reload (no browser refresh)
 
 ## install
 
