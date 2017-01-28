@@ -1,9 +1,7 @@
 // global webpack config used for swim projects
-
-
 var webpack = require('webpack');
 var fs = require('fs');
-
+var path = require('path');
 
 // webpack plugins
 var BowerWebpackPlugin = require('bower-webpack-plugin');
@@ -11,14 +9,20 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 var projectPackage = require(global.cwd + '/package.json');
-var staticPath = global.cwd + '/static';
+var staticPath = global.cwd + '/assets';
 
 var plugins = [];
+var copypaths = [
+    {from:__dirname + '/node_modules/material-design-lite/material.min.css', to:'assets'},
+    {from:__dirname + '/node_modules/material-design-lite/material.min.js', to:'assets'}
+];
+
 if (fs.existsSync(staticPath)) {
-    plugins.push(new CopyWebpackPlugin([
-        { from: 'static', to:'static' }
-    ]));
-}
+    copypaths.push({ from: 'assets', to:'assets' });
+} 
+
+
+plugins.push(new CopyWebpackPlugin(copypaths));
 
 module.exports = {
 
@@ -46,12 +50,42 @@ module.exports = {
     resolve: {
         extensions: ['','.js', '.css'],
         modules: [__dirname + '/node_modules', 'node_modules'],
-        alias: {
-            xtag: __dirname + '/node_modules/x-tag',
-            jquery: __dirname + '/node_modules/jquery',
-            swim: __dirname + '/node_modules/swim-client-js',
-            _: __dirname + '/node_modules/lodash'
-        }
+        alias: (function(){
+
+            var projectComponentsPath = global.cwd + '/components';
+        
+            var aliasRet = {
+                xtag: __dirname + '/node_modules/x-tag',
+                jquery: __dirname + '/node_modules/jquery',
+                swim: __dirname + '/node_modules/swim-client-js',
+                _: __dirname + '/node_modules/lodash',
+                router: __dirname + '/router.js',
+                store: __dirname + '/store.js',
+                tag: __dirname + '/tag.js'
+            }
+
+            // alias anything that is in the components directory
+            if (fs.existsSync(projectComponentsPath)) {
+                    function parseComponents(nodes, parent) {
+ 
+                        if(parent && nodes.indexOf('index.js') > -1)
+                            aliasRet['components/' + parent] = global.cwd + '/components/' + parent + '/index.js';
+                        else
+                            nodes.forEach(function(node) {
+                                var path = projectComponentsPath + '/' +(parent ? parent+'/' : '')+node;
+                                if(fs.statSync(path).isDirectory())
+                                    parseComponents(fs.readdirSync(path), (parent ? parent+'/' : '')+node);
+                            });
+                    }
+                   
+                    parseComponents(fs.readdirSync(projectComponentsPath));
+            } 
+
+            console.log(aliasRet);
+
+            return aliasRet;
+
+        }())
     },
 
     // we need source maps
@@ -95,9 +129,24 @@ module.exports = {
             jQuery: 'jquery',
             Swim: 'swim',
             _:'_',
-            xtag: 'xtag'
+            tag: 'tag',
+            template: 'template'
         }),
-        new HtmlWebpackPlugin(),
+        new HtmlWebpackPlugin({
+             // Required
+               inject: false,
+               appMountId: 'app',
+               title: 'My App',
+               template: require('html-webpack-template'),
+               scripts: [
+                    '/assets/material.min.js'
+                ],
+                links: [
+                    'https://fonts.googleapis.com/css?family=Roboto',
+                    'https://fonts.googleapis.com/icon?family=Material+Icons',
+                    '/assets/material.min.css'
+                ]
+        }),
         new BowerWebpackPlugin({
             modulesDirectories: ["bower_components"],
             manifestFiles: "bower.json",
