@@ -140,6 +140,7 @@ module.exports = {
                inject: false,
                appMountId: 'app',
                title: 'My App',
+               mobile: true,
                template: require('html-webpack-template'),
                 links: [
                     'https://fonts.googleapis.com/css?family=Roboto'
