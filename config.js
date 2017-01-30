@@ -63,6 +63,7 @@ module.exports = {
             }
 
             // alias anything that is in the components directory
+            // todo increase dyanmic aliases, for views etc
             if (fs.existsSync(projectComponentsPath)) {
                     function parseComponents(nodes, parent) {
  
@@ -125,7 +126,6 @@ module.exports = {
     // plugins to help run our dev tool
     plugins: [
         new webpack.ProvidePlugin({
-
             $: 'jquery',
             jQuery: 'jquery',
             Swim: 'swim',

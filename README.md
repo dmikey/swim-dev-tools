@@ -63,6 +63,10 @@ swim-dev --build
 
 * Support JSX with a JSX to inline function transform
 
+### notes
+
+* When creating new controls using `Material Design Lite` when you add a Ripple, also remove Ripple events by adding `mdl-js-ripple-effect--ignore-events` to the HTML element's class list.
+
 ### credits
 
 Built with webpack, and a number of open source webpack modules.
