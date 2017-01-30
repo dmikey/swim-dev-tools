@@ -1,4 +1,5 @@
 var xtag = require('xtag');
+var diffDOM = require('diff-dom');
 
 function guid() {
   function s4() {
@@ -23,9 +24,8 @@ module.exports = function(tagName, def) {
             created: function() {
                 this.guid = guid();
                 uniqueTagName = tagName + '-' + this.guid;
-                store[uniqueTagName] = store[uniqueTagName] || {};
+                if(store) store[uniqueTagName] = store[uniqueTagName] || {};
                 if(def.defaults) store[uniqueTagName] = def.defaults;
-    
                 if(def.created) def.created.apply(this, arguments);
             },
             inserted: function () {
@@ -33,8 +33,15 @@ module.exports = function(tagName, def) {
                 if(def.inserted) def.inserted.apply(this, arguments);
             },
             attributeChanged: function (attrName, oldValue, newValue) {
+                var dd = new diffDOM();
                 store[uniqueTagName][attrName] = newValue;
-                this.innerHTML = this.template(store[uniqueTagName]);
+
+                var elementB = $(this.template(store[uniqueTagName]))[0];
+                var elementA = this.children[0];
+                
+                var diff = dd.diff(elementA, elementB);
+                dd.apply(elementA, diff);
+
                 if(def.attributeChanged) def.attributeChanged.apply(this, arguments);
             }
         },

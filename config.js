@@ -12,10 +12,7 @@ var projectPackage = require(global.cwd + '/package.json');
 var staticPath = global.cwd + '/assets';
 
 var plugins = [];
-var copypaths = [
-    {from:__dirname + '/node_modules/material-design-lite/material.min.css', to:'assets'},
-    {from:__dirname + '/node_modules/material-design-lite/material.min.js', to:'assets'}
-];
+var copypaths = [];
 
 if (fs.existsSync(staticPath)) {
     copypaths.push({ from: 'assets', to:'assets' });
@@ -61,7 +58,8 @@ module.exports = {
                 _: __dirname + '/node_modules/lodash',
                 router: __dirname + '/router.js',
                 store: __dirname + '/store.js',
-                tag: __dirname + '/tag.js'
+                tag: __dirname + '/tag.js',
+                material: __dirname + '/material.js'
             }
 
             // alias anything that is in the components directory
@@ -80,8 +78,6 @@ module.exports = {
                    
                     parseComponents(fs.readdirSync(projectComponentsPath));
             } 
-
-            console.log(aliasRet);
 
             return aliasRet;
 
@@ -102,7 +98,7 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-                loader: ['style-loader', 'css-loader']
+                loaders: ['style-loader', 'css-loader']
             },
             {
                 test: /\.(html|svg)$/,
@@ -118,6 +114,10 @@ module.exports = {
             {
                 test: /\.scss$/,
                 loaders: ["style-loader", "css-loader", "sass-loader"]
+            },
+            {
+                test: /\.(eot|svg|ttf|woff|woff2)$/,
+                loader: 'file?name=assets/fonts/[name].[ext]'
             }
         ],
     },
@@ -125,12 +125,15 @@ module.exports = {
     // plugins to help run our dev tool
     plugins: [
         new webpack.ProvidePlugin({
+
             $: 'jquery',
             jQuery: 'jquery',
             Swim: 'swim',
             _:'_',
             tag: 'tag',
-            template: 'template'
+            template: 'template',
+            __material__: 'material',
+            Router: 'router'
         }),
         new HtmlWebpackPlugin({
              // Required
@@ -138,13 +141,8 @@ module.exports = {
                appMountId: 'app',
                title: 'My App',
                template: require('html-webpack-template'),
-               scripts: [
-                    '/assets/material.min.js'
-                ],
                 links: [
-                    'https://fonts.googleapis.com/css?family=Roboto',
-                    'https://fonts.googleapis.com/icon?family=Material+Icons',
-                    '/assets/material.min.css'
+                    'https://fonts.googleapis.com/css?family=Roboto'
                 ]
         }),
         new BowerWebpackPlugin({
