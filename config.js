@@ -18,8 +18,8 @@ if (fs.existsSync(staticPath)) {
     copypaths.push({ from: 'assets', to:'assets' });
 } 
 
-
 plugins.push(new CopyWebpackPlugin(copypaths));
+
 
 module.exports = {
 
@@ -28,13 +28,14 @@ module.exports = {
 
     // for now we set one entry for the main package.json entry
     entry: {
-        app: ['./' + projectPackage.main]
+        app: ['./' + (projectPackage.swimMain || projectPackage.main)],
+        test: global.cwd + '/components/swim-map/index.js'
     },
 
     // default to build and app.min.js for now
     output: {
         path: cwd + '/build/',
-        filename: "app.min.js"
+        filename: "[name].min.js"
     },
 
     // ensure we resolve loaders in our dev tool, and not just in the project
@@ -59,7 +60,9 @@ module.exports = {
                 router: __dirname + '/router.js',
                 store: __dirname + '/store.js',
                 tag: __dirname + '/tag.js',
-                material: __dirname + '/material.js'
+                material: __dirname + '/material.js',
+                swimModule: __dirname + '/module.js',
+                script: __dirname + '/node_modules/scriptjs'
             }
 
             // alias anything that is in the components directory
@@ -133,13 +136,15 @@ module.exports = {
             tag: 'tag',
             template: 'template',
             __material__: 'material',
-            Router: 'router'
+            __swimModule__: 'swimModule',
+            Router: 'router',
+            Script: 'script'
         }),
         new HtmlWebpackPlugin({
              // Required
                inject: false,
                appMountId: 'app',
-               title: 'My App',
+               title: projectPackage.title || 'My App',
                mobile: true,
                template: require('html-webpack-template'),
                 links: [

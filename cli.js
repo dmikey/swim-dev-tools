@@ -45,7 +45,7 @@ if (args.build === true) {
 }
 
 // dev server for a swim project
-if (args.serve === true) {
+if (args.serve === true || args.nwjs === true) {
     var config = globalConfig;
     config.entry.app.unshift(__dirname + "/node_modules/webpack-dev-server/client?http://localhost:8080/", __dirname + "/node_modules/webpack/hot/dev-server");
     config.plugins.push(new webpack.HotModuleReplacementPlugin());
@@ -59,7 +59,13 @@ if (args.serve === true) {
     });
 
     server.listen(8080);
+    
+    // var exec = require('child_process').exec;
+    // var cmd = 'nw ' + cwd;
 
+    // exec(cmd, function(error, stdout, stderr) {
+    //     console.log(error,stdout);
+    // });
     console.log('now serving on port 8080 http://127.0.0.1:8080');
 }
 

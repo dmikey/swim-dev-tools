@@ -39,4 +39,6 @@ module.exports = function (tagName, def) {
         methods: methods,
         accessors: def.accessors
     });
+
+    return tagName;
 }
