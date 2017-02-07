@@ -15,8 +15,11 @@ var plugins = [];
 var copypaths = [];
 
 if (fs.existsSync(staticPath)) {
-    copypaths.push({ from: 'assets', to:'assets' });
-} 
+    copypaths.push({
+        from: 'assets',
+        to: 'assets'
+    });
+}
 
 plugins.push(new CopyWebpackPlugin(copypaths));
 
@@ -28,14 +31,13 @@ module.exports = {
 
     // for now we set one entry for the main package.json entry
     entry: {
-        app: ['./' + (projectPackage.swimMain || projectPackage.main)],
-        test: global.cwd + '/components/swim-map/index.js'
+        app: ['./' + (projectPackage.swimMain || projectPackage.main)]
     },
 
     // default to build and app.min.js for now
     output: {
         path: cwd + '/build/',
-        filename: "[name].min.js"
+        filename: "[chunkhash].[name].js"
     },
 
     // ensure we resolve loaders in our dev tool, and not just in the project
@@ -46,12 +48,12 @@ module.exports = {
     },
 
     resolve: {
-        extensions: ['','.js', '.css'],
+        extensions: ['', '.js', '.css'],
         modules: [__dirname + '/node_modules', 'node_modules'],
-        alias: (function(){
+        alias: (function () {
 
             var projectComponentsPath = global.cwd + '/components';
-        
+
             var aliasRet = {
                 xtag: __dirname + '/node_modules/x-tag',
                 jquery: __dirname + '/node_modules/jquery',
@@ -68,20 +70,20 @@ module.exports = {
             // alias anything that is in the components directory
             // todo increase dyanmic aliases, for views etc
             if (fs.existsSync(projectComponentsPath)) {
-                    function parseComponents(nodes, parent) {
- 
-                        if(parent && nodes.indexOf('index.js') > -1)
-                            aliasRet['components/' + parent] = global.cwd + '/components/' + parent + '/index.js';
-                        else
-                            nodes.forEach(function(node) {
-                                var path = projectComponentsPath + '/' +(parent ? parent+'/' : '')+node;
-                                if(fs.statSync(path).isDirectory())
-                                    parseComponents(fs.readdirSync(path), (parent ? parent+'/' : '')+node);
-                            });
-                    }
-                   
-                    parseComponents(fs.readdirSync(projectComponentsPath));
-            } 
+                function parseComponents(nodes, parent) {
+
+                    if (parent && nodes.indexOf('index.js') > -1)
+                        aliasRet['components/' + parent] = global.cwd + '/components/' + parent + '/index.js';
+                    else
+                        nodes.forEach(function (node) {
+                            var path = projectComponentsPath + '/' + (parent ? parent + '/' : '') + node;
+                            if (fs.statSync(path).isDirectory())
+                                parseComponents(fs.readdirSync(path), (parent ? parent + '/' : '') + node);
+                        });
+                }
+
+                parseComponents(fs.readdirSync(projectComponentsPath));
+            }
 
             return aliasRet;
 
@@ -113,7 +115,7 @@ module.exports = {
             },
             {
                 test: /\.less$/,
-                loaders:  ["style-loader", "css-loader", "less-loader"]
+                loaders: ["style-loader", "css-loader", "less-loader"]
             },
             {
                 test: /\.scss$/,
@@ -125,14 +127,14 @@ module.exports = {
             }
         ],
     },
-    
+
     // plugins to help run our dev tool
     plugins: [
         new webpack.ProvidePlugin({
             $: 'jquery',
             jQuery: 'jquery',
             Swim: 'swim',
-            _:'_',
+            _: '_',
             tag: 'tag',
             template: 'template',
             __material__: 'material',
@@ -141,15 +143,15 @@ module.exports = {
             Script: 'script'
         }),
         new HtmlWebpackPlugin({
-             // Required
-               inject: false,
-               appMountId: 'app',
-               title: projectPackage.title || 'My App',
-               mobile: true,
-               template: require('html-webpack-template'),
-                links: [
-                    'https://fonts.googleapis.com/css?family=Roboto'
-                ]
+            // Required
+            inject: false,
+            appMountId: 'app',
+            title: projectPackage.title || 'My App',
+            mobile: true,
+            template: require('html-webpack-template'),
+            links: [
+                'https://fonts.googleapis.com/css?family=Roboto'
+            ]
         }),
         new BowerWebpackPlugin({
             modulesDirectories: ["bower_components"],
@@ -157,6 +159,13 @@ module.exports = {
             includes: /.*/,
             excludes: [],
             searchResolveModulesDirectories: true
+        }),
+        new webpack.optimize.CommonsChunkPlugin({
+            name: 'vendor',
+            minChunks: function (module) {
+                // this assumes your vendor imports exist in the node_modules directory
+                return module.context && module.context.indexOf('node_modules') !== -1;
+            }
         })
     ].concat(plugins),
 };
