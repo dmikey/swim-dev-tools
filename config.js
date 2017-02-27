@@ -37,7 +37,7 @@ module.exports = {
     // default to build and app.min.js for now
     output: {
         path: cwd + '/build/',
-        filename: "[chunkhash].[name].js"
+        filename: "[name].js"
     },
 
     // ensure we resolve loaders in our dev tool, and not just in the project
@@ -148,10 +148,7 @@ module.exports = {
             appMountId: 'app',
             title: projectPackage.title || 'My App',
             mobile: true,
-            template: require('html-webpack-template'),
-            links: [
-                'https://fonts.googleapis.com/css?family=Roboto'
-            ]
+            template: require('html-webpack-template')
         }),
         new BowerWebpackPlugin({
             modulesDirectories: ["bower_components"],
@@ -161,7 +158,7 @@ module.exports = {
             searchResolveModulesDirectories: true
         }),
         new webpack.optimize.CommonsChunkPlugin({
-            name: 'vendor',
+            name: 'swim.platform',
             minChunks: function (module) {
                 // this assumes your vendor imports exist in the node_modules directory
                 return module.context && module.context.indexOf('node_modules') !== -1;
