@@ -64,7 +64,8 @@ module.exports = {
                 tag: __dirname + '/tag.js',
                 material: __dirname + '/material.js',
                 swimModule: __dirname + '/module.js',
-                script: __dirname + '/node_modules/scriptjs'
+                script: __dirname + '/node_modules/scriptjs',
+		'jquery-ui': __dirname + '/node_modules/jquery-ui'
             }
 
             // alias anything that is in the components directory
