@@ -17,8 +17,8 @@ module.exports = function (tagName, def) {
     var uniqueTagName;
     var methods = def.methods || {};
     methods.template = _.template(def.template);
-
-    xtag.register(tagName, {
+    
+    var newDef = _.merge({
         content: methods.template(def.defaults),
         lifecycle: {
             created: function () {
@@ -38,7 +38,7 @@ module.exports = function (tagName, def) {
         },
         methods: methods,
         accessors: def.accessors
-    });
+    }, def);
 
-    return tagName;
+    return xtag.register(tagName, newDef);
 }
