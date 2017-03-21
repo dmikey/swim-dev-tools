@@ -65,8 +65,25 @@ module.exports = {
                 material: __dirname + '/material.js',
                 swimModule: __dirname + '/module.js',
                 script: __dirname + '/node_modules/scriptjs',
-		'jquery-ui': __dirname + '/node_modules/jquery-ui'
+                dialogPolyfill: __dirname + '/node_modules/dialog-polyfill',
+                'jquery-ui': __dirname + '/node_modules/jquery-ui',
+                'font-awesome': __dirname + '/fontawesome.js'
             }
+
+            // make this more generic and then clean up the components stuff.
+            function aliasSubDirectories(nodes, parent, cwd) {
+                nodes.forEach(function (node) {
+                    var path = cwd + '/' + (parent ? parent + '/' : '') + node;
+                    if (fs.statSync(path).isDirectory()) {
+                        aliasSubDirectories(fs.readdirSync(path), (parent ? parent + '/' : '') + node);
+                    } else {
+                        aliasRet['store/' + node.slice(0, node.length - 3)] = path;
+                    }
+                });
+            }
+
+            var projectStorePath = global.cwd + '/store';
+            if (fs.existsSync(projectStorePath))  aliasSubDirectories(fs.readdirSync(projectStorePath), void(0), projectStorePath);
 
             // alias anything that is in the components directory
             // todo increase dyanmic aliases, for views etc
@@ -87,7 +104,6 @@ module.exports = {
             }
 
             return aliasRet;
-
         }())
     },
 
@@ -140,8 +156,10 @@ module.exports = {
             template: 'template',
             __material__: 'material',
             __swimModule__: 'swimModule',
+            __fontawesome__ : 'font-awesome',
             Router: 'router',
-            Script: 'script'
+            Script: 'script',
+            dialogPolyfill: 'dialogPolyfill'
         }),
         new HtmlWebpackPlugin({
             // Required
