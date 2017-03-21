@@ -39,6 +39,7 @@
     "source-map": "^0.5.6",
     "style-loader": "^0.13.1",
     "swim-client-js": "^0.4.8",
+    "watch": "^1.0.2",
     "webpack": "^1.14.0",
     "webpack-dev-server": "^1.16.2",
     "x-tag": "^1.5.11",

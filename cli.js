@@ -8,6 +8,7 @@ var path = require('path');
 var blargs = require('blargs').default;
 var webpack = require('webpack');
 var WebpackDevServer = require('webpack-dev-server');
+var watch = require('watch');
 
 // todo: check if package.json exists, we need to setup an
 // init command path anyway
@@ -58,6 +59,7 @@ if (args.serve === true || args.nwjs === true) {
 		    __dirname + "/node_modules/webpack/hot/dev-server");
     config.plugins.push(new webpack.HotModuleReplacementPlugin());
     var compiler = webpack(config);
+    
     var server = new WebpackDevServer(compiler, {
         hot: true,
         contentBase: cwd + "/build",
@@ -67,6 +69,29 @@ if (args.serve === true || args.nwjs === true) {
     });
 
     server.listen(8080);
+
+    watch.watchTree(cwd, function (f, curr, prev) {
+        if (typeof f == "object" && prev === null && curr === null) {
+        // Finished walking the tree
+    } else if (prev === null) {
+              console.log('change');
+              server.close();
+
+              compiler = webpack(config);
+              server = new WebpackDevServer(compiler, {
+                    hot: true,
+                    contentBase: cwd + "/build",
+                    compress: false,
+                    port: 9000
+              });
+              server.listen(8080);
+              
+        } else if (curr.nlink === 0) {
+        // f was removed
+        } else {
+        // f was changed
+        }
+    })
 
     console.log('now serving on port 8080 http://127.0.0.1:8080');
 }
@@ -78,7 +103,6 @@ if (args.init === true) {
         // package.json was found, offer use the ability to scaffold component
         return;
     }
-
 
     // otherwise user can  create a project
     var prompt = require('prompt');
