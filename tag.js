@@ -13,7 +13,7 @@ function guid() {
 module.exports = function (tagName, def) {
     // creates an xtag from a definition file
     // use a singleton store, so that the state can be scraped, or restored, etc
-    var store = require('store');
+    var dispatcher = require('dispatcher');
     var uniqueTagName;
     var methods = def.methods || {};
     methods.template = _.template(def.template);
@@ -24,15 +24,15 @@ module.exports = function (tagName, def) {
             created: function () {
                 this.guid = guid();
                 uniqueTagName = tagName + '-' + this.guid;
-                if (store) store[uniqueTagName] = store[uniqueTagName] || {};
-                if (def.defaults) store[uniqueTagName] = def.defaults;
+                if (dispatcher) dispatcher[uniqueTagName] = dispatcher[uniqueTagName] || {};
+                if (def.defaults) dispatcher[uniqueTagName] = def.defaults;
                 if (def.created) def.created.apply(this, arguments);
             },
             inserted: function () {
                 if (def.inserted) def.inserted.apply(this, arguments);
             },
             attributeChanged: function (attrName, oldValue, newValue) {
-                store[uniqueTagName][attrName] = newValue;
+                dispatcher[uniqueTagName][attrName] = newValue;
                 if (def.attributeChanged) def.attributeChanged.apply(this, arguments);
             }
         },

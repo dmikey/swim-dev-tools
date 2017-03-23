@@ -55,43 +55,27 @@ if (args.build === true) {
 // dev server for a swim project
 if (args.serve === true || args.nwjs === true) {
     var config = require('./config');
-    config.entry.app.unshift(__dirname + "/node_modules/webpack-dev-server/client?http://localhost:8080/", 
-		    __dirname + "/node_modules/webpack/hot/dev-server");
+
+    config.entry.app.unshift(__dirname + "/node_modules/webpack-dev-server/client?http://localhost:8080/",
+        __dirname + "/node_modules/webpack/hot/dev-server");
+
     config.plugins.push(new webpack.HotModuleReplacementPlugin());
+
     var compiler = webpack(config);
-    
+
     var server = new WebpackDevServer(compiler, {
         hot: true,
+        cache: false,
         contentBase: cwd + "/build",
         compress: false,
         port: 9000,
+        overlay: true,
+        quiet: true,
+        watchContentBase: true
         // stats: 'errors-only'
     });
 
     server.listen(8080);
-
-    watch.watchTree(cwd, function (f, curr, prev) {
-        if (typeof f == "object" && prev === null && curr === null) {
-        // Finished walking the tree
-    } else if (prev === null) {
-              console.log('change');
-              server.close();
-
-              compiler = webpack(config);
-              server = new WebpackDevServer(compiler, {
-                    hot: true,
-                    contentBase: cwd + "/build",
-                    compress: false,
-                    port: 9000
-              });
-              server.listen(8080);
-              
-        } else if (curr.nlink === 0) {
-        // f was removed
-        } else {
-        // f was changed
-        }
-    })
 
     console.log('now serving on port 8080 http://127.0.0.1:8080');
 }

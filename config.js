@@ -50,61 +50,23 @@ module.exports = {
     resolve: {
         extensions: ['', '.js', '.css'],
         modules: [__dirname + '/node_modules', 'node_modules'],
-        alias: (function () {
-
-            var projectComponentsPath = global.cwd + '/components';
-
-            var aliasRet = {
-                xtag: __dirname + '/node_modules/x-tag',
-                jquery: __dirname + '/node_modules/jquery',
-                swim: __dirname + '/node_modules/swim-client-js',
-                _: __dirname + '/node_modules/lodash',
-                router: __dirname + '/router.js',
-                store: __dirname + '/store.js',
-                tag: __dirname + '/tag.js',
-                material: __dirname + '/material.js',
-                swimModule: __dirname + '/module.js',
-                script: __dirname + '/node_modules/scriptjs',
-                dialogPolyfill: __dirname + '/node_modules/dialog-polyfill',
-                'jquery-ui': __dirname + '/node_modules/jquery-ui',
-                'font-awesome': __dirname + '/fontawesome.js'
-            }
-
-            // make this more generic and then clean up the components stuff.
-            function aliasSubDirectories(nodes, parent, cwd) {
-                nodes.forEach(function (node) {
-                    var path = cwd + '/' + (parent ? parent + '/' : '') + node;
-                    if (fs.statSync(path).isDirectory()) {
-                        aliasSubDirectories(fs.readdirSync(path), (parent ? parent + '/' : '') + node);
-                    } else {
-                        aliasRet['store/' + node.slice(0, node.length - 3)] = path;
-                    }
-                });
-            }
-
-            var projectStorePath = global.cwd + '/store';
-            if (fs.existsSync(projectStorePath))  aliasSubDirectories(fs.readdirSync(projectStorePath), void(0), projectStorePath);
-
-            // alias anything that is in the components directory
-            // todo increase dyanmic aliases, for views etc
-            if (fs.existsSync(projectComponentsPath)) {
-                function parseComponents(nodes, parent) {
-
-                    if (parent && nodes.indexOf('index.js') > -1)
-                        aliasRet['components/' + parent] = global.cwd + '/components/' + parent + '/index.js';
-                    else
-                        nodes.forEach(function (node) {
-                            var path = projectComponentsPath + '/' + (parent ? parent + '/' : '') + node;
-                            if (fs.statSync(path).isDirectory())
-                                parseComponents(fs.readdirSync(path), (parent ? parent + '/' : '') + node);
-                        });
-                }
-
-                parseComponents(fs.readdirSync(projectComponentsPath));
-            }
-
-            return aliasRet;
-        }())
+        alias: {
+            xtag: __dirname + '/node_modules/x-tag',
+            jquery: __dirname + '/node_modules/jquery',
+            swim: __dirname + '/node_modules/swim-client-js',
+            _: __dirname + '/node_modules/lodash',
+            router: __dirname + '/router.js',
+            dispatcher: __dirname + '/dispatcher.js',
+            tag: __dirname + '/tag.js',
+            material: __dirname + '/material.js',
+            swimModule: __dirname + '/module.js',
+            script: __dirname + '/node_modules/scriptjs',
+            dialogPolyfill: __dirname + '/node_modules/dialog-polyfill',
+            'jquery-ui': __dirname + '/node_modules/jquery-ui',
+            'font-awesome': __dirname + '/fontawesome.js',
+            'components' : global.cwd + '/components',
+            'store': global.cwd + '/components'
+        }
     },
 
     // we need source maps
