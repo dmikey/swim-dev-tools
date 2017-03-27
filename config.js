@@ -43,13 +43,14 @@ module.exports = {
     // ensure we resolve loaders in our dev tool, and not just in the project
     resolveLoader: {
         modulesDirectories: [
-            __dirname + '/node_modules'
+            __dirname + '/node_modules',
+            global.cwd + '/node_modules'
         ]
     },
 
     resolve: {
         extensions: ['', '.js', '.css'],
-        modules: [__dirname + '/node_modules', 'node_modules'],
+        modules: [__dirname + '/node_modules', global.cwd + '/node_modules'],
         alias: {
             xtag: __dirname + '/node_modules/x-tag',
             jquery: __dirname + '/node_modules/jquery',
