@@ -55,6 +55,7 @@ module.exports = {
             xtag: __dirname + '/node_modules/x-tag',
             jquery: __dirname + '/node_modules/jquery',
             swim: __dirname + '/node_modules/swim-client-js',
+            recon: __dirname + '/node_modules/recon-js',
             _: __dirname + '/node_modules/lodash',
             router: __dirname + '/router.js',
             dispatcher: __dirname + '/dispatcher.js',
@@ -65,7 +66,7 @@ module.exports = {
             dialogPolyfill: __dirname + '/node_modules/dialog-polyfill',
             'jquery-ui': __dirname + '/node_modules/jquery-ui',
             'font-awesome': __dirname + '/fontawesome.js',
-            'components' : global.cwd + '/components',
+            'components': global.cwd + '/components',
             'store': global.cwd + '/components'
         }
     },
@@ -104,6 +105,14 @@ module.exports = {
             {
                 test: /\.(eot|svg|ttf|woff|woff2)$/,
                 loader: 'file?name=assets/fonts/[name].[ext]'
+            },
+            {
+                test: /.js?$/,
+                loader: 'babel-loader',
+                exclude: /node_modules/,
+                query: {
+                    presets:[__dirname + '/node_modules/babel-preset-es2015']
+                }
             }
         ],
     },
@@ -114,12 +123,13 @@ module.exports = {
             $: 'jquery',
             jQuery: 'jquery',
             Swim: 'swim',
+            Recon: 'recon',
             _: '_',
             tag: 'tag',
             template: 'template',
             __material__: 'material',
             __swimModule__: 'swimModule',
-            __fontawesome__ : 'font-awesome',
+            __fontawesome__: 'font-awesome',
             Router: 'router',
             Script: 'script',
             dialogPolyfill: 'dialogPolyfill'

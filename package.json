@@ -9,6 +9,8 @@
   "dependencies": {
     "babel-core": "^6.22.1",
     "babel-loader": "^6.2.10",
+    "babel-preset-es2015": "^6.24.0",
+    "babel-preset-stage-2": "^6.22.0",
     "baggage-loader": "^0.2.4",
     "base64-image-loader": "^1.2.0",
     "blargs": "^0.2.0",
