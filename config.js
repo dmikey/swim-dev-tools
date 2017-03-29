@@ -67,7 +67,8 @@ module.exports = {
             'jquery-ui': __dirname + '/node_modules/jquery-ui',
             'font-awesome': __dirname + '/fontawesome.js',
             'components': global.cwd + '/components',
-            'store': global.cwd + '/store'
+            'store': global.cwd + '/store',
+            'Store': __dirname + '/store.js'
         }
     },
 
@@ -132,7 +133,9 @@ module.exports = {
             __fontawesome__: 'font-awesome',
             Router: 'router',
             Script: 'script',
-            dialogPolyfill: 'dialogPolyfill'
+            dialogPolyfill: 'dialogPolyfill',
+            Store: 'Store',
+            Dispatcher: 'dispatcher'
         }),
         new HtmlWebpackPlugin({
             // Required
@@ -140,7 +143,10 @@ module.exports = {
             appMountId: 'app',
             title: projectPackage.title || 'My App',
             mobile: true,
-            template: require('html-webpack-template')
+            template: require('html-webpack-template'),
+            scripts: [
+
+            ]
         }),
         new BowerWebpackPlugin({
             modulesDirectories: ["bower_components"],

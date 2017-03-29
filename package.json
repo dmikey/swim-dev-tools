@@ -43,6 +43,7 @@
     "swim-client-js": "^0.4.8",
     "webpack": "^1.14.0",
     "webpack-dev-server": "^1.16.2",
+    "worker-loader": "^0.8.0",
     "x-tag": "^1.5.11",
     "xml-loader": "^1.1.0"
   },
