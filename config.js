@@ -67,7 +67,7 @@ module.exports = {
             'jquery-ui': __dirname + '/node_modules/jquery-ui',
             'font-awesome': __dirname + '/fontawesome.js',
             'components': global.cwd + '/components',
-            'store': global.cwd + '/components'
+            'store': global.cwd + '/store'
         }
     },
 
