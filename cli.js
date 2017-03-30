@@ -66,7 +66,7 @@ function main() {
     if (args.serve === true || args.nwjs === true) {
         var config = require('./config');
 
-        config.entry.app.unshift(__dirname + "/node_modules/webpack-dev-server/client?http://localhost:8080/",
+        config.entry.app.unshift(__dirname + "/node_modules/webpack-dev-server/client?http://localhost:" + (args.port || 8080),
             __dirname + "/node_modules/webpack/hot/dev-server");
 
         config.plugins.push(new webpack.HotModuleReplacementPlugin());
@@ -87,7 +87,7 @@ function main() {
 
         server.listen(args.port || 8080);
 
-        console.log('Swim Project Dev Server, serving on port ' + args.port || 8080 + ' http://127.0.0.1:' + args.port || 8080);
+        console.log('Swim Project Dev Server, serving on port ' + (args.port || 8080) + ' http://127.0.0.1:' + (args.port || 8080));
 
         return;
     }
