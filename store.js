@@ -4,7 +4,7 @@ var utils = require('./utils');
 var worker = new Worker;
 
 var timers = {};
-var store = {};
+var _store = {};
 
 module.exports = {
     // Store.connect({
@@ -32,14 +32,14 @@ module.exports = {
         worker.postMessage(JSON.stringify({action: 'query', query: queryString, dispatchAction: dispatchAction}));
     },
 
-    static: store,
+    static: _store,
 
     put: function(key, value) {
-        store[key] = value;
+        _store[key] = value;
     },
 
     get: function(key) {
-        return store[key]
+        return _store[key]
     },
  
     // todo: offload these timers into webworkers if possible, so that they can run
@@ -47,7 +47,7 @@ module.exports = {
     timer: function(callback, delay) {
         var guid = utils.guid();
         var fn = function() {
-            _.merge(store, callback());
+            _.merge(_store, callback());
             timers[guid] = setTimeout(fn, delay);
         }
 
@@ -62,7 +62,18 @@ module.exports = {
 };
 
 window.addEventListener("unload",function(){
-  Lawnchair(function(){
-    this.save(store);
-  })
+
+    var store = new Lawnchair({name:'testing'}, function(store) {
+
+        // Create an object
+        var me = {key:'brian'};
+
+        // Save it
+        store.save(me);
+
+        // Access it later... Yes even after a page refresh!
+        store.get('brian', function(me) {
+            console.log(me);
+        });
+    });
 });

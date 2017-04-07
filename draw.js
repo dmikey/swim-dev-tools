@@ -16,5 +16,5 @@ var drawFn = function drawFn() {
 drawTimer = setTimeout(drawFn, 1000/24);
 
 module.exports = function(fn) {
-        if(typeof fn == 'function') frames.push(fn);
-    }
+    if(typeof fn == 'function') frames.push(fn);
+}

@@ -39,8 +39,28 @@ function main() {
         // global webpack config used for swim projects
         var globalConfig = require('./config');
 
+        console.log('Prepping build workspace.')
+
+        var deleteFolderRecursive = function(path) {
+        if( fs.existsSync(path) ) {
+            fs.readdirSync(path).forEach(function(file,index){
+            var curPath = path + "/" + file;
+            if(fs.lstatSync(curPath).isDirectory()) { // recurse
+                deleteFolderRecursive(curPath);
+            } else { // delete file
+                fs.unlinkSync(curPath);
+            }
+            });
+            fs.rmdirSync(path);
+        }
+        };
+
+        deleteFolderRecursive(globalConfig.output.path);
+
         // build the swim-project
-        console.log('\uD83D\uDD28 Bundling SWIM Project...');
+        console.log('Bundling SWIM Project');
+        console.log('swim-tools version: ', packageJSON.version);
+        console.log('webpack version: ', packageJSON.dependencies.webpack)
 
         if (!projectPackage) {
             console.log('no package.json found!');
@@ -56,7 +76,22 @@ function main() {
 
         webpack(globalConfig, function (err, stats) {
             if (err) return handleError(err);
+
+        if (args.archive === true) {
+            var zipFolder = require('zip-folder');
+
+            console.log('creating ZIP artifact of project: ',  cwd + '/archive.zip');
+            zipFolder(globalConfig.output.path, cwd + '/archive.zip', function(err) {
+                if(err) {
+                    console.log('oh no!', err);
+                } else {
+                  console.log('Build Finished...', globalConfig.output.path);
+                }
+            });
+        } else {
             console.log('\u2713 Build Finished...', globalConfig.output.path);
+        }
+          
         });
 
         return;
