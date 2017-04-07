@@ -50,9 +50,11 @@ onmessage = function(event) {
 	} 
 
 	if(opts.action === 'query') {
-		console.log(jsonQuery(opts.query, {
+		var queryReturn = jsonQuery(opts.query, {
 			data: data
-		}));
+		});
+		queryReturn.dispatchAction = opts.dispatchAction;
+		postMessage(JSON.stringify(queryReturn));
 	}
 
 }

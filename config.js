@@ -52,23 +52,26 @@ module.exports = {
         extensions: ['', '.js', '.css'],
         modules: [__dirname + '/node_modules', global.cwd + '/node_modules'],
         alias: {
-            xtag: __dirname + '/node_modules/x-tag',
-            jquery: __dirname + '/node_modules/jquery',
-            swim: __dirname + '/node_modules/swim-client-js',
-            recon: __dirname + '/node_modules/recon-js',
-            _: __dirname + '/node_modules/lodash',
-            router: __dirname + '/router.js',
-            dispatcher: __dirname + '/dispatcher.js',
-            tag: __dirname + '/tag.js',
-            material: __dirname + '/material.js',
-            swimModule: __dirname + '/module.js',
-            script: __dirname + '/node_modules/scriptjs',
-            dialogPolyfill: __dirname + '/node_modules/dialog-polyfill',
+            'xtag': __dirname + '/node_modules/x-tag',
+            'jquery': __dirname + '/node_modules/jquery',
+            'swim': __dirname + '/node_modules/swim-client-js',
+            'recon': __dirname + '/node_modules/recon-js',
+            '_': __dirname + '/node_modules/lodash',
+            'router': __dirname + '/router.js',
+            'dispatcher': __dirname + '/dispatcher.js',
+            'tag': __dirname + '/tag.js',
+            'material': __dirname + '/material.js',
+            'swimModule': __dirname + '/module.js',
+            'script': __dirname + '/node_modules/scriptjs',
+            'dialogPolyfill': __dirname + '/node_modules/dialog-polyfill',
             'jquery-ui': __dirname + '/node_modules/jquery-ui',
             'font-awesome': __dirname + '/fontawesome.js',
             'components': global.cwd + '/components',
             'store': global.cwd + '/store',
-            'Store': __dirname + '/store.js'
+            'Store': __dirname + '/store.js',
+            'moment': __dirname + '/node_modules/moment',
+            'Draw': __dirname + '/draw.js',
+            'Lawnchair' : __dirname + '/node_modules/lawnchair'
         }
     },
 
@@ -135,7 +138,10 @@ module.exports = {
             Script: 'script',
             dialogPolyfill: 'dialogPolyfill',
             Store: 'Store',
-            Dispatcher: 'dispatcher'
+            Dispatcher: 'dispatcher',
+            moment: 'moment',
+            Draw: 'Draw',
+            Lawnchair: 'Lawnchair'
         }),
         new HtmlWebpackPlugin({
             // Required
