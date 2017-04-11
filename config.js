@@ -9,11 +9,13 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 var projectPackage = require(global.cwd + '/package.json');
+var packageJSON = require('./package.json');
 var staticPath = global.cwd + '/assets';
 
 var plugins = [];
 var copypaths = [];
 
+// copy paths for moving files into build directory
 if (fs.existsSync(staticPath)) {
     copypaths.push({
         from: 'assets',
@@ -21,8 +23,10 @@ if (fs.existsSync(staticPath)) {
     });
 }
 
+// add copy plugin
+// todo: ensure paths in copypaths are not using
+// other plugins like base64
 plugins.push(new CopyWebpackPlugin(copypaths));
-
 
 module.exports = {
 
@@ -31,7 +35,8 @@ module.exports = {
 
     // for now we set one entry for the main package.json entry
     entry: {
-        app: ['./' + (projectPackage.swimMain || projectPackage.main)]
+        // app: ['./' + (projectPackage.swimMain || projectPackage.main)]
+        app: [__dirname + '/lib/bootstrap.js']
     },
 
     // default to build and app.min.js for now
@@ -48,6 +53,9 @@ module.exports = {
         ]
     },
 
+    // resolve files
+    // we reference a bunch of files in the build tool
+    // command dir is the project path
     resolve: {
         extensions: ['', '.js', '.css'],
         modules: [__dirname + '/node_modules', global.cwd + '/node_modules'],
@@ -57,26 +65,29 @@ module.exports = {
             'swim': __dirname + '/node_modules/swim-client-js',
             'recon': __dirname + '/node_modules/recon-js',
             '_': __dirname + '/node_modules/lodash',
-            'router': __dirname + '/router.js',
-            'dispatcher': __dirname + '/dispatcher.js',
-            'tag': __dirname + '/tag.js',
-            'material': __dirname + '/material.js',
-            'swimModule': __dirname + '/module.js',
+            'router': __dirname + '/lib/router.js',
+            'dispatcher': __dirname + '/lib/dispatcher.js',
+            'tag': __dirname + '/lib/tag.js',
+            'material': __dirname + '/lib/material.js',
+            'swimModule': __dirname + '/lib/module.js',
             'script': __dirname + '/node_modules/scriptjs',
             'dialogPolyfill': __dirname + '/node_modules/dialog-polyfill',
             'jquery-ui': __dirname + '/node_modules/jquery-ui',
-            'font-awesome': __dirname + '/fontawesome.js',
+            'font-awesome': __dirname + '/lib/fontawesome.js',
             'components': global.cwd + '/components',
             'store': global.cwd + '/store',
-            'Store': __dirname + '/store.js',
+            'Store': __dirname + '/lib/store.js',
             'moment': __dirname + '/node_modules/moment',
-            'Draw': __dirname + '/draw.js',
-            'Lawnchair' : __dirname + '/node_modules/lawnchair'
+            'Draw': __dirname + '/lib/draw.js',
+            'Lawnchair' : __dirname + '/node_modules/lawnchair',
+            'baseApp' : global.cwd + '/index.js'
         }
     },
 
     // we need source maps
     devtool: "source-map",
+
+    
     module: {
         // we're sending all these loaders with this one dev tool install
         loaders: [{
@@ -123,6 +134,16 @@ module.exports = {
 
     // plugins to help run our dev tool
     plugins: [
+        
+        // provide accessables to modules
+        new webpack.DefinePlugin({
+            'app': JSON.stringify({
+                config: projectPackage,
+                corePackages: packageJSON.dependencies
+            })
+        }),
+
+        // provide modules directly to modules no requires needed
         new webpack.ProvidePlugin({
             $: 'jquery',
             jQuery: 'jquery',
@@ -143,6 +164,8 @@ module.exports = {
             Draw: 'Draw',
             Lawnchair: 'Lawnchair'
         }),
+
+        // generate an index.html for the app
         new HtmlWebpackPlugin({
             // Required
             inject: false,
@@ -154,6 +177,8 @@ module.exports = {
 
             ]
         }),
+
+        // package bower scripts
         new BowerWebpackPlugin({
             modulesDirectories: ["bower_components"],
             manifestFiles: "bower.json",
@@ -161,6 +186,8 @@ module.exports = {
             excludes: [],
             searchResolveModulesDirectories: true
         }),
+
+        // split out framework from app code, faster dev refreshed on HMR
         new webpack.optimize.CommonsChunkPlugin({
             name: 'swim.platform',
             minChunks: function (module) {
