@@ -1,8 +1,7 @@
 {
   "name": "swim-dev-tools",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "description": "",
-  "main": "index.js",
   "bin": {
     "swim-dev": "cli.js"
   },
