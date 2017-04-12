@@ -1,6 +1,6 @@
 {
   "name": "swim-dev-tools",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "description": "",
   "bin": {
     "swim-dev": "cli.js"
@@ -15,6 +15,7 @@
     "blargs": "^0.2.0",
     "bower-webpack-plugin": "^0.1.9",
     "bundle-loader": "^0.5.4",
+    "c3": "^0.4.11",
     "can": "^3.4.1",
     "copy-webpack-plugin": "^4.0.1",
     "css-loader": "^0.26.1",

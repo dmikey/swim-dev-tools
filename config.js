@@ -82,7 +82,8 @@ module.exports = {
             'Lawnchair' : __dirname + '/node_modules/lawnchair',
             'baseApp' : global.cwd + '/index.js',
             'uicore' : __dirname + '/node_modules/swim-ui-core',
-            'd3' : __dirname + '/node_modules/d3'
+            'd3' : __dirname + '/node_modules/d3',
+            'c3' : __dirname + '/node_modules/c3'
         }
     },
 
@@ -91,6 +92,7 @@ module.exports = {
 
     
     module: {
+
         // we're sending all these loaders with this one dev tool install
         loaders: [{
                 test: /\.(jpg|png|gif|jpeg)$/,
