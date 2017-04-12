@@ -80,7 +80,9 @@ module.exports = {
             'moment': __dirname + '/node_modules/moment',
             'Draw': __dirname + '/lib/draw.js',
             'Lawnchair' : __dirname + '/node_modules/lawnchair',
-            'baseApp' : global.cwd + '/index.js'
+            'baseApp' : global.cwd + '/index.js',
+            'uicore' : __dirname + '/node_modules/swim-ui-core',
+            'd3' : __dirname + '/node_modules/d3'
         }
     },
 
