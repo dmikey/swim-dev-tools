@@ -81,6 +81,9 @@ module.exports = {
             'Draw': __dirname + '/lib/draw.js',
             'Lawnchair' : __dirname + '/node_modules/lawnchair',
             'baseApp' : global.cwd + '/index.js',
+            'uicore' : __dirname + '/node_modules/swim-ui-core',
+            'd3' : __dirname + '/node_modules/d3',
+            'c3' : __dirname + '/node_modules/c3'
             'edge' : __dirname + '/lib/edge.js'
         }
     },

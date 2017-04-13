@@ -1,6 +1,6 @@
 {
   "name": "swim-dev-tools",
-  "version": "1.0.13",
+  "version": "1.0.15",
   "description": "",
   "bin": {
     "swim-dev": "cli.js"
@@ -15,9 +15,11 @@
     "blargs": "^0.2.0",
     "bower-webpack-plugin": "^0.1.9",
     "bundle-loader": "^0.5.4",
+    "c3": "^0.4.11",
     "can": "^3.4.1",
     "copy-webpack-plugin": "^4.0.1",
     "css-loader": "^0.26.1",
+    "d3": "^4.7.4",
     "dialog-polyfill": "^0.4.7",
     "director": "^1.2.8",
     "edge-css": "git+https://github.com/flavioespinoza/edge-css.git",
@@ -44,6 +46,7 @@
     "source-map": "^0.5.6",
     "style-loader": "^0.13.1",
     "swim-client-js": "^0.4.8",
+    "swim-ui-core": "^1.0.0",
     "webpack": "^1.14.0",
     "webpack-dev-server": "^1.16.2",
     "worker-loader": "^0.8.0",
