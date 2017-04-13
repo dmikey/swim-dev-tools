@@ -1,6 +1,6 @@
 {
   "name": "swim-dev-tools",
-  "version": "1.0.16",
+  "version": "1.0.17",
   "description": "",
   "bin": {
     "swim-dev": "cli.js"
@@ -20,7 +20,7 @@
     "can": "^3.4.1",
     "copy-webpack-plugin": "^4.0.1",
     "css-loader": "^0.26.1",
-    "d3": "^4.7.4",
+    "d3": "^3.5.17",
     "dialog-polyfill": "^0.4.7",
     "director": "^1.2.8",
     "edge-css": "git+https://github.com/flavioespinoza/edge-css.git",
