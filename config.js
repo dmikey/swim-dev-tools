@@ -80,7 +80,8 @@ module.exports = {
             'moment': __dirname + '/node_modules/moment',
             'Draw': __dirname + '/lib/draw.js',
             'Lawnchair' : __dirname + '/node_modules/lawnchair',
-            'baseApp' : global.cwd + '/index.js'
+            'baseApp' : global.cwd + '/index.js',
+            'edge' : __dirname + '/lib/edge.js'
         }
     },
 

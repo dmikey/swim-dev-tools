@@ -20,6 +20,7 @@
     "css-loader": "^0.26.1",
     "dialog-polyfill": "^0.4.7",
     "director": "^1.2.8",
+    "edge-css": "git+https://github.com/flavioespinoza/edge-css.git",
     "file-loader": "^0.10.0",
     "font-awesome": "^4.7.0",
     "html-loader": "^0.4.4",
