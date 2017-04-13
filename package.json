@@ -13,6 +13,7 @@
     "baggage-loader": "^0.2.4",
     "base64-image-loader": "^1.2.0",
     "blargs": "^0.2.0",
+    "bower": "^1.8.0",
     "bower-webpack-plugin": "^0.1.9",
     "bundle-loader": "^0.5.4",
     "c3": "^0.4.11",
