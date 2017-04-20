@@ -18,6 +18,7 @@
     "bundle-loader": "^0.5.4",
     "c3": "^0.4.11",
     "can": "^3.4.1",
+    "chance": "^1.0.6",
     "copy-webpack-plugin": "^4.0.1",
     "css-loader": "^0.26.1",
     "d3": "^3.5.17",
