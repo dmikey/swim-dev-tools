@@ -145,7 +145,8 @@ module.exports = {
         new webpack.DefinePlugin({
             'app': JSON.stringify({
                 config: projectPackage,
-                corePackages: packageJSON.dependencies
+                corePackages: packageJSON.dependencies,
+                debug: global.debug
             })
         }),
 
