@@ -83,8 +83,9 @@ module.exports = {
             'baseApp' : global.cwd + '/index.js',
             'uicore' : __dirname + '/node_modules/swim-ui-core',
             'd3' : __dirname + '/node_modules/d3',
-            'c3' : __dirname + '/node_modules/c3',
-            'edge' : __dirname + '/lib/edge.js'
+            'c3' : __dirname + '/lib/c3',
+            'edge' : __dirname + '/lib/edge.js',
+            'utis' : __dirname + '/lib/utils.js'
         }
     },
 
@@ -166,7 +167,9 @@ module.exports = {
             Dispatcher: 'dispatcher',
             moment: 'moment',
             Draw: 'Draw',
-            Lawnchair: 'Lawnchair'
+            Lawnchair: 'Lawnchair',
+            d3: 'd3',
+            c3: 'c3'
         }),
 
         // generate an index.html for the app
