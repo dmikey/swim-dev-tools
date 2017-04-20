@@ -83,9 +83,10 @@ module.exports = {
             'baseApp' : global.cwd + '/index.js',
             'uicore' : __dirname + '/node_modules/swim-ui-core',
             'd3' : __dirname + '/node_modules/d3',
-            'c3' : __dirname + '/lib/c3',
+            'utis' : __dirname + '/lib/utils.js',
+            'c3' : __dirname + '/lib/c3.js',
             'edge' : __dirname + '/lib/edge.js',
-            'utis' : __dirname + '/lib/utils.js'
+            'chance' : __dirname + '/node_modules/chance'
         }
     },
 
