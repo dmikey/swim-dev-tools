@@ -82,7 +82,7 @@ module.exports = {
             'Lawnchair' : __dirname + '/node_modules/lawnchair',
             'baseApp' : global.cwd + '/index.js',
             'uicore' : __dirname + '/node_modules/swim-ui-core',
-            'd3' : __dirname + '/node_modules/d3',
+            'd3Select' : __dirname + '/node_modules/d3-selection',
             'c3' : __dirname + '/node_modules/c3',
             'edge' : __dirname + '/lib/edge.js',
             'chance' : __dirname + '/node_modules/chance'
