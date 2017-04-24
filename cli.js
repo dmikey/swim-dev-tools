@@ -1,6 +1,7 @@
 #! /usr/bin/env node
 
 global.cwd = process.cwd();
+global.debug = false;
 
 // node modules to run this tools
 var fs = require('fs');
@@ -99,6 +100,7 @@ function main() {
 
     // dev server for a swim project
     if (args.serve === true || args.nwjs === true) {
+        global.debug = true;
         var config = require('./config');
 
         config.entry.app.unshift(__dirname + "/node_modules/webpack-dev-server/client?http://localhost:" + (args.port || 8080),
