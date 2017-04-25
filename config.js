@@ -73,7 +73,7 @@ module.exports = {
             'script': __dirname + '/node_modules/scriptjs',
             'dialogPolyfill': __dirname + '/node_modules/dialog-polyfill',
             'jquery-ui': __dirname + '/node_modules/jquery-ui',
-            'font-awesome': __dirname + '/lib/fontawesome.js',
+            'font-awesome': __dirname + '/node_modules/font-awesome/less/font-awesome.less',
             'components': global.cwd + '/components',
             'store': global.cwd + '/store',
             'Store': __dirname + '/lib/store.js',
