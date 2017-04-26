@@ -73,7 +73,7 @@ module.exports = {
             'script': __dirname + '/node_modules/scriptjs',
             'dialogPolyfill': __dirname + '/node_modules/dialog-polyfill',
             'jquery-ui': __dirname + '/node_modules/jquery-ui',
-            'font-awesome': __dirname + '/node_modules/font-awesome/less/font-awesome.less',
+            'font-awesome': __dirname + '/lib/font-awesome.less',
             'components': global.cwd + '/components',
             'store': global.cwd + '/store',
             'Store': __dirname + '/lib/store.js',
@@ -124,7 +124,7 @@ module.exports = {
                 loaders: ["style-loader", "css-loader", "sass-loader"]
             },
             {
-                test: /\.(eot|svg|ttf|woff|woff2)$/,
+                test: /\.(woff|woff2|eot|ttf|svg)(\?.*$|$)/,
                 loader: 'file?name=assets/fonts/[name].[ext]'
             },
             {
