@@ -101,6 +101,12 @@ function main() {
     // dev server for a swim project
     if (args.serve === true || args.nwjs === true) {
         global.debug = true;
+    
+        // turn off debug if passed false from args
+        if(args.debug == false) {
+            global.debug = false;
+        }
+
         var config = require('./config');
 
         config.entry.app.unshift(__dirname + "/node_modules/webpack-dev-server/client?http://localhost:" + (args.port || 8080),
