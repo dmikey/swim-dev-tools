@@ -86,7 +86,8 @@ module.exports = {
             'utis' : __dirname + '/lib/utils.js',
             'c3' : __dirname + '/lib/c3.js',
             'edge' : __dirname + '/lib/edge.js',
-            'chance' : __dirname + '/node_modules/chance'
+            'chance' : __dirname + '/node_modules/chance',
+            'debug' : __dirname + '/lib/debug.js'
         }
     },
 
@@ -171,7 +172,8 @@ module.exports = {
             Draw: 'Draw',
             Lawnchair: 'Lawnchair',
             d3: 'd3',
-            c3: 'c3'
+            c3: 'c3',
+            debug: 'debug'
         }),
 
         // generate an index.html for the app
