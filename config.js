@@ -73,7 +73,7 @@ module.exports = {
             'script': __dirname + '/node_modules/scriptjs',
             'dialogPolyfill': __dirname + '/node_modules/dialog-polyfill',
             'jquery-ui': __dirname + '/node_modules/jquery-ui',
-            'font-awesome': __dirname + '/lib/fontawesome.js',
+            'font-awesome': __dirname + '/lib/font-awesome.less',
             'components': global.cwd + '/components',
             'store': global.cwd + '/store',
             'Store': __dirname + '/lib/store.js',
@@ -86,7 +86,8 @@ module.exports = {
             'utis' : __dirname + '/lib/utils.js',
             'c3' : __dirname + '/lib/c3.js',
             'edge' : __dirname + '/lib/edge.js',
-            'chance' : __dirname + '/node_modules/chance'
+            'chance' : __dirname + '/node_modules/chance',
+            'debug' : __dirname + '/lib/debug.js'
         }
     },
 
@@ -124,7 +125,7 @@ module.exports = {
                 loaders: ["style-loader", "css-loader", "sass-loader"]
             },
             {
-                test: /\.(eot|svg|ttf|woff|woff2)$/,
+                test: /\.(woff|woff2|eot|ttf|svg)(\?.*$|$)/,
                 loader: 'file?name=assets/fonts/[name].[ext]'
             },
             {
@@ -171,7 +172,8 @@ module.exports = {
             Draw: 'Draw',
             Lawnchair: 'Lawnchair',
             d3: 'd3',
-            c3: 'c3'
+            c3: 'c3',
+            debug: 'debug'
         }),
 
         // generate an index.html for the app
