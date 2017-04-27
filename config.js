@@ -87,7 +87,8 @@ module.exports = {
             'c3' : __dirname + '/lib/c3.js',
             'edge' : __dirname + '/lib/edge.js',
             'chance' : __dirname + '/node_modules/chance',
-            'debug' : __dirname + '/lib/debug.js'
+            'debug' : __dirname + '/lib/debug.js',
+            'odometer' : __dirname + '/lib/odometer.js'
         }
     },
 
@@ -121,7 +122,7 @@ module.exports = {
                 loaders: ["style-loader", "css-loader", "less-loader"]
             },
             {
-                test: /\.scss$/,
+                test: /\.(scss|sass)$/,
                 loaders: ["style-loader", "css-loader", "sass-loader"]
             },
             {
