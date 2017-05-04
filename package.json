@@ -22,6 +22,7 @@
     "copy-webpack-plugin": "^4.0.1",
     "css-loader": "^0.26.1",
     "d3": "^3.5.17",
+    "d3-selection": "^1.0.5",
     "dialog-polyfill": "^0.4.7",
     "director": "^1.2.8",
     "edge-css": "git+https://github.com/flavioespinoza/edge-css.git",
