@@ -6,7 +6,7 @@ require('./styles/main.css');
 
 // setup the router
 var router = Router({
-    '/': function () {
+    '/': function() {
         var helloView = require('./views/hello_world');
         helloView.appendTo('#app');
     }

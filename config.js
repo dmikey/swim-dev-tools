@@ -79,23 +79,23 @@ module.exports = {
             'Store': __dirname + '/lib/store.js',
             'moment': __dirname + '/node_modules/moment',
             'Draw': __dirname + '/lib/draw.js',
-            'Lawnchair' : __dirname + '/node_modules/lawnchair',
-            'baseApp' : global.cwd + '/index.js',
-            'uicore' : __dirname + '/node_modules/swim-ui-core',
-            'd3' : __dirname + '/node_modules/d3',
-            'utis' : __dirname + '/lib/utils.js',
-            'c3' : __dirname + '/lib/c3.js',
-            'edge' : __dirname + '/lib/edge.js',
-            'chance' : __dirname + '/node_modules/chance',
-            'debug' : __dirname + '/lib/debug.js',
-            'odometer' : __dirname + '/lib/odometer.js'
+            'Lawnchair': __dirname + '/node_modules/lawnchair',
+            'baseApp': global.cwd + '/index.js',
+            'uicore': __dirname + '/node_modules/swim-ui-core',
+            'd3': __dirname + '/node_modules/d3',
+            'utis': __dirname + '/lib/utils.js',
+            'c3': __dirname + '/lib/c3.js',
+            'edge': __dirname + '/lib/edge.js',
+            'chance': __dirname + '/node_modules/chance',
+            'debug': __dirname + '/lib/debug.js',
+            'odometer': __dirname + '/lib/odometer.js'
         }
     },
 
     // we need source maps
     devtool: "source-map",
 
-    
+
     module: {
         // we're sending all these loaders with this one dev tool install
         loaders: [{
@@ -134,7 +134,7 @@ module.exports = {
                 loader: 'babel-loader',
                 exclude: /node_modules/,
                 query: {
-                    presets:[__dirname + '/node_modules/babel-preset-es2015']
+                    presets: [__dirname + '/node_modules/babel-preset-es2015']
                 }
             }
         ],
@@ -142,7 +142,7 @@ module.exports = {
 
     // plugins to help run our dev tool
     plugins: [
-        
+
         // provide accessables to modules
         new webpack.DefinePlugin({
             'app': JSON.stringify({
@@ -160,7 +160,6 @@ module.exports = {
             Recon: 'recon',
             _: '_',
             tag: 'tag',
-            template: 'template',
             __material__: 'material',
             __swimModule__: 'swimModule',
             __fontawesome__: 'font-awesome',
@@ -202,7 +201,7 @@ module.exports = {
         // split out framework from app code, faster dev refreshed on HMR
         new webpack.optimize.CommonsChunkPlugin({
             name: 'swim.platform',
-            minChunks: function (module) {
+            minChunks: function(module) {
                 // this assumes your vendor imports exist in the node_modules directory
                 return module.context && module.context.indexOf('node_modules') !== -1;
             }

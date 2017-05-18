@@ -8,8 +8,8 @@ tag('x-hello-component', {
     inserted: function() {
         var instance = this;
         var actions = require('store/actions');
-        Dispatcher.subscribe(function(action, data){
-            switch(action) {
+        Dispatcher.subscribe(function(action, data) {
+            switch (action) {
                 case actions.UPDATE_HELLO_COMPONENT:
                     instance.message = data.message;
                     break;
@@ -20,11 +20,11 @@ tag('x-hello-component', {
         message: {
             // links to the 'message' attribute
             attribute: {},
-            set: function (val) {
+            set: function(val) {
                 this._message = val;
                 $('div', this).text(val)
             },
-            get: function () {
+            get: function() {
                 return this._message;
             }
         }

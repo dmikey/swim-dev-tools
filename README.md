@@ -1,4 +1,10 @@
-# swim-dev
+# swim-dev 1.1.7
+
+###Change Log
+
+#### 1.1.7
+* modified draw cycle, so that element declares state dirty on draw, and no longer clocked to 166ms.
+* fixed an issue where our provided `debug` was messing with `SocketJS`. 
 
 Swim CLI, the easiest way to build Swim Apps.
 
@@ -75,6 +81,50 @@ Extra sugar to help you get around your project faster
 
 * `$project_dir/components/$name_of_component` is short handed to `components/$name_of_component`
 * `$project_dir/store` is short handed to `store`
+
+### provided modules / swim-dev injected
+
+Double Unders are used in Swim-Dev. These Double Unders allow Swim-Dev to instance needed libraries.
+
+```
+__material__ // include material design lite in the project.
+
+__fontawesome__ // include font awesome with the project.
+
+
+```
+
+You can get the debug status of the app. This pattern is for compatibility with other libraries that complain about our injection.
+
+```
+var isDebug = debug('app-name')();
+```
+
+Third Party Library
+
+```javascript
+$() // jquery
+moment // moment
+_ // lodash
+Router // a router instance from the Director Library
+Script // script loader Script(url);
+Lawnchair // lawnchair library
+d3 // d3 visualization library
+c3 // chart library
+```
+
+Swim inspired additions to the framework 
+
+```javascript
+Swim // swim-client
+Recon // recon data library
+
+tag // swim sugared X-Tag implimentation
+Draw // swim draw manager can be used stand-alone
+
+Store // swim flux store with webworker integration, sugars swim-client
+Dispatcher // swim flux dispatcher
+```
 
 ### notes
 
