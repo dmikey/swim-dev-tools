@@ -1,8 +1,13 @@
-# swim-dev 1.1.7
+# swim-dev 1.1.8
 
 ###Change Log
 
+#### 1.1.8
+
+* js standard and js beautify now on board. You can run these easily by simply using `swim-dev --clean --validate`
+
 #### 1.1.7
+
 * modified draw cycle, so that element declares state dirty on draw, and no longer clocked to 166ms.
 * fixed an issue where our provided `debug` was messing with `SocketJS`. 
 

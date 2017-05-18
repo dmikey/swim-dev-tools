@@ -9,5 +9,29 @@
   },
   "private": true,
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "standard": {
+      "globals": [  
+            "$",
+            "jQuery",
+            "Swim",
+            "Recon",
+            "_",
+            "tag",
+            "__material__",
+            "__swimModule__",
+            "__fontawesome__",
+            "Router",
+            "Script",
+            "dialogPolyfill",
+            "Store",
+            "Dispatcher",
+            "moment",
+            "Draw",
+            "Lawnchair",
+            "d3",
+            "c3",
+            "debug"
+      ]
+   }
 }

@@ -12,7 +12,6 @@ var webpack = require('webpack');
 var WebpackDevServer = require('webpack-dev-server');
 var packageJSON = require('./package.json');
 
-
 // todo: check if package.json exists, we need to setup an
 // init command path anyway
 // project files we need to know about
@@ -33,6 +32,39 @@ function main() {
     if (args.version === true) {
         console.log(packageJSON.version);
     }
+    
+    // init a swim project? 
+    if (args.clean === true) {
+        console.log('cleaning with js-beautify');
+        
+        // Run external tool synchronously
+        const exec = require('child_process').exec;
+        exec(['find . -type f -name "*.js" -exec js-beautify -r {} \\;'], (err, stdout, stderr) => {
+          if (err) {
+            console.error(err);
+            return;
+          }
+          console.log(stdout);
+        });
+
+    }
+    
+   
+    // init a swim project? 
+    if (args.validate === true) {
+        console.log('validating and auto-correcting with standard');
+        
+        // Run external tool synchronously
+        const exec = require('child_process').exec;
+        exec(['find . -type f -name "*.js" -not -path "./node_modules/*" -exec standard {} --fix \\;'], (err, stdout, stderr) => {
+          if (err) {
+            console.error(err);
+            return;
+          }
+          console.log(stdout);
+        });
+
+    }
 
     // build a swim project
     if (args.build === true) {
@@ -43,17 +75,17 @@ function main() {
         console.log('Prepping build workspace.')
 
         var deleteFolderRecursive = function(path) {
-        if( fs.existsSync(path) ) {
-            fs.readdirSync(path).forEach(function(file,index){
-            var curPath = path + "/" + file;
-            if(fs.lstatSync(curPath).isDirectory()) { // recurse
-                deleteFolderRecursive(curPath);
-            } else { // delete file
-                fs.unlinkSync(curPath);
+            if (fs.existsSync(path)) {
+                fs.readdirSync(path).forEach(function(file, index) {
+                    var curPath = path + "/" + file;
+                    if (fs.lstatSync(curPath).isDirectory()) { // recurse
+                        deleteFolderRecursive(curPath);
+                    } else { // delete file
+                        fs.unlinkSync(curPath);
+                    }
+                });
+                fs.rmdirSync(path);
             }
-            });
-            fs.rmdirSync(path);
-        }
         };
 
         deleteFolderRecursive(globalConfig.output.path);
@@ -75,24 +107,24 @@ function main() {
             sourcemap: true
         }));
 
-        webpack(globalConfig, function (err, stats) {
+        webpack(globalConfig, function(err, stats) {
             if (err) return handleError(err);
 
-        if (args.archive === true) {
-            var zipFolder = require('zip-folder');
+            if (args.archive === true) {
+                var zipFolder = require('zip-folder');
 
-            console.log('creating ZIP artifact of project: ',  cwd + '/archive.zip');
-            zipFolder(globalConfig.output.path, cwd + '/archive.zip', function(err) {
-                if(err) {
-                    console.log('oh no!', err);
-                } else {
-                  console.log('Build Finished...', globalConfig.output.path);
-                }
-            });
-        } else {
-            console.log('\u2713 Build Finished...', globalConfig.output.path);
-        }
-          
+                console.log('creating ZIP artifact of project: ', cwd + '/archive.zip');
+                zipFolder(globalConfig.output.path, cwd + '/archive.zip', function(err) {
+                    if (err) {
+                        console.log('oh no!', err);
+                    } else {
+                        console.log('Build Finished...', globalConfig.output.path);
+                    }
+                });
+            } else {
+                console.log('\u2713 Build Finished...', globalConfig.output.path);
+            }
+
         });
 
         return;
@@ -101,9 +133,9 @@ function main() {
     // dev server for a swim project
     if (args.serve === true || args.nwjs === true) {
         global.debug = true;
-    
+
         // turn off debug if passed false from args
-        if(args.debug == false) {
+        if (args.debug == false) {
             global.debug = false;
         }
 
@@ -152,11 +184,11 @@ function main() {
 
             prompt.start();
 
-            prompt.get(properties, function (err, result) {
+            prompt.get(properties, function(err, result) {
                 if (err) {
                     return onErr(err);
                 }
-                
+
                 fs.copy(__dirname + '/project_templates/swim_component', global.cwd + '/components/hello_component', err => {
                     if (err) return console.error(err)
                     console.log("success!")
@@ -176,13 +208,13 @@ function main() {
 
         prompt.start();
 
-        prompt.get(properties, function (err, result) {
+        prompt.get(properties, function(err, result) {
             if (err) {
                 return onErr(err);
             }
 
             console.log('Creating Project: ', result['project-name']);
-            
+
             fs.copy(__dirname + '/project_templates/swim_app', global.cwd + '/' + result['project-name'], err => {
                 if (err) return console.error(err)
                 console.log("success!")
