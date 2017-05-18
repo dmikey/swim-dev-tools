@@ -39,7 +39,7 @@ function main() {
         
         // Run external tool synchronously
         const exec = require('child_process').exec;
-        exec(['find . -type f -name "*.js" -exec js-beautify -r {} \\;'], (err, stdout, stderr) => {
+        exec(['find . -type f -name "*.js" -exec ' + __dirname + '/node_modules/.bin/js-beautify -r {} \\;'], (err, stdout, stderr) => {
           if (err) {
             console.error(err);
             return;
@@ -56,7 +56,7 @@ function main() {
         
         // Run external tool synchronously
         const exec = require('child_process').exec;
-        exec(['find . -type f -name "*.js" -not -path "./node_modules/*" -exec standard {} --fix \\;'], (err, stdout, stderr) => {
+        exec(['find . -type f -name "*.js" -not -path "./node_modules/*" -exec ' + __dirname + '/node_modules/.bin/standard {} --fix \\;'], (err, stdout, stderr) => {
           if (err) {
             console.error(err);
             return;
