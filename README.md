@@ -57,6 +57,18 @@ Builds the project for distribution.
 swim-dev --build
 ```
 
+### run code beautifer
+
+```bash
+swim-dev --clean
+```
+
+### run code linter
+
+```
+swim-dev --validate
+```
+
 ### benefits
 
 * Standard Collection of Swim supported libraries and components
