@@ -1,73 +1,45 @@
-// global webpack config used for swim projects
 var webpack = require('webpack');
-var fs = require('fs');
 var path = require('path');
 
-// webpack plugins
-var BowerWebpackPlugin = require('bower-webpack-plugin');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-var CopyWebpackPlugin = require('copy-webpack-plugin');
-var projectPackage = require(global.cwd + '/package.json');
-var packageJSON = require('./package.json');
-var staticPath = global.cwd + '/assets';
-
-var plugins = [];
-var copypaths = [];
-
-// copy paths for moving files into build directory
-if (fs.existsSync(staticPath)) {
-    copypaths.push({
-        from: 'assets',
-        to: 'assets'
-    });
-}
-
-
-    copypaths.push({
-        from: __dirname + '/build/assets',
-        to: 'assets'
-    });
-    
-    copypaths.push({
-        from: __dirname + '/build/*.js',
-        to: 'assets',
-        flatten: true
-    });
-    
-// add copy plugin
-// todo: ensure paths in copypaths are not using
-// other plugins like base64
-plugins.push(new CopyWebpackPlugin(copypaths));
-
 module.exports = {
-
-    // set the context to that of the app we are building
-    context: global.cwd,
-
-    // for now we set one entry for the main package.json entry
-    entry: {
-        // app: ['./' + (projectPackage.swimMain || projectPackage.main)]
-        app: [__dirname + '/lib/bootstrap.js']
-    },
-
-    // default to build and app.min.js for now
-    output: {
-        path: cwd + '/build/',
-        filename: "assets/[name].min.js"
-    },
-
-    // ensure we resolve loaders in our dev tool, and not just in the project
-    resolveLoader: {
-        modulesDirectories: [
-            __dirname + '/node_modules',
-            global.cwd + '/node_modules'
-        ]
-    },
-
-    // resolve files
-    // we reference a bunch of files in the build tool
-    // command dir is the project path
-    resolve: {
+  entry: {
+    swim: [
+        './node_modules/x-tag',
+        './node_modules/lodash',
+        './node_modules/jquery',
+        './node_modules/swim-client-js',
+        './node_modules/recon-js',
+        './node_modules/scriptjs',
+        './node_modules/dialog-polyfill',
+        './node_modules/moment',
+        './node_modules/lawnchair',
+        './node_modules/d3',
+        './node_modules/swim-ui-core/mdl-progress-bar',
+        './node_modules/swim-ui-core/swim-chart-tooltip',
+        './node_modules/swim-ui-core/swim-donut-chart',
+        './node_modules/swim-ui-core/swim-left-nav',
+        './node_modules/swim-ui-core/swim-line-chart',
+        './node_modules/swim-ui-core/swim-sankey', 
+        './node_modules/swim-ui-core/swim-step-chart',
+        './lib/debug',
+        './lib/c3', 
+        './lib/edge', 
+        './lib/material',
+        './lib/dispatcher', 
+        './lib/module',
+        './lib/odometer',
+        './lib/router',
+        './lib/store',
+        './lib/tag',
+        './lib/utils'
+    ],
+  },
+  output: {
+    filename: '[name].platform.js',
+    path: path.resolve(__dirname, 'build'),
+    library: 'swim_platform',
+  },
+  resolve: {
         extensions: ['', '.js', '.css'],
         modules: [__dirname + '/node_modules', global.cwd + '/node_modules'],
         alias: {
@@ -101,12 +73,8 @@ module.exports = {
             'odometer': __dirname + '/lib/odometer.js'
         }
     },
-
-    // we need source maps
-    devtool: "source-map",
-
-
-    module: {
+     
+  module: {
         // we're sending all these loaders with this one dev tool install
         loaders: [{
                 test: /\.(jpg|png|gif|jpeg)$/,
@@ -149,21 +117,8 @@ module.exports = {
             }
         ],
     },
-
-    // plugins to help run our dev tool
-    plugins: [
-
-        // provide accessables to modules
-        new webpack.DefinePlugin({
-            'app': JSON.stringify({
-                config: projectPackage,
-                corePackages: packageJSON.dependencies,
-                debug: global.debug
-            })
-        }),
-
-        // provide modules directly to modules no requires needed
-        new webpack.ProvidePlugin({
+  plugins: [new webpack.optimize.UglifyJsPlugin({minimize: true}),
+  new webpack.ProvidePlugin({
             $: 'jquery',
             jQuery: 'jquery',
             Swim: 'swim',
@@ -185,42 +140,8 @@ module.exports = {
             c3: 'c3',
             debug: 'debug'
         }),
-
-        // generate an index.html for the app
-        new HtmlWebpackPlugin({
-            // Required
-            inject: false,
-            appMountId: 'app',
-            title: projectPackage.title || 'My App',
-            mobile: true,
-            template: require('html-webpack-template'),
-            scripts: [
-                'assets/swim.platform.js'
-            ]
-        }),
-
-        // package bower scripts
-        new BowerWebpackPlugin({
-            modulesDirectories: ["bower_components"],
-            manifestFiles: "bower.json",
-            includes: /.*/,
-            excludes: [],
-            searchResolveModulesDirectories: true
-        }),
-
-        // split out framework from app code, faster dev refreshed on HMR
-        new webpack.optimize.CommonsChunkPlugin({
-            name: 'app.commons',
-            minChunks: function(module) {
-                // this assumes your vendor imports exist in the node_modules or lib directory
-                return module.context && (module.context.indexOf('node_modules') !== -1 || module.context.indexOf('lib') !== -1);
-            }
-        }),
-        
-        new webpack.DllReferencePlugin({
-            context: __dirname,
-            manifest: require(__dirname + '/build/platform-manifest.json'),
-        })
-  
-    ].concat(plugins),
+        new webpack.DllPlugin({
+    name: 'swim_platform',
+    path: 'build/platform-manifest.json',
+  })]
 };

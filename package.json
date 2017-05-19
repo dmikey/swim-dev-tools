@@ -1,6 +1,6 @@
 {
   "name": "swim-dev-tools",
-  "version": "1.1.9",
+  "version": "1.2.0",
   "description": "",
   "bin": {
     "swim-dev": "cli.js"
@@ -46,12 +46,14 @@
     "odometer": "^0.4.8",
     "prompt": "^1.0.0",
     "sass-loader": "^4.1.1",
+    "script-loader": "^0.7.0",
     "scriptjs": "^2.5.8",
     "source-map": "^0.5.6",
     "standard": "^10.0.2",
     "style-loader": "^0.13.1",
     "swim-client-js": "^0.4.8",
     "swim-ui-core": "^1.0.0",
+    "unminified-webpack-plugin": "^1.2.0",
     "webpack": "^1.14.0",
     "webpack-dev-server": "^1.16.2",
     "worker-loader": "^0.8.0",
@@ -61,7 +63,8 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "echo \"Success: no test specified\" && exit 0"
+    "test": "echo \"Success: no test specified\" && exit 0",
+    "platform": "webpack --config platform.config.js"
   },
   "author": "",
   "license": "ISC"
