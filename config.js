@@ -196,7 +196,8 @@ module.exports = {
             template: require('html-webpack-template'),
             scripts: [
                 'assets/swim.platform.js'
-            ]
+            ],
+            links: ['https://fonts.googleapis.com/css?family=Lato:300,300i,400,400i,700,700i,900,900i']
         }),
 
         // package bower scripts
