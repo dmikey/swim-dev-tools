@@ -22,9 +22,7 @@ module.exports = {
         './node_modules/swim-ui-core/swim-sankey', 
         './node_modules/swim-ui-core/swim-step-chart',
         './lib/debug',
-        './lib/c3', 
-        './lib/edge', 
-        './lib/material',
+        './lib/c3',
         './lib/dispatcher', 
         './lib/module',
         './lib/odometer',
@@ -41,7 +39,7 @@ module.exports = {
   },
   resolve: {
         extensions: ['', '.js', '.css'],
-        modules: [__dirname + '/node_modules', global.cwd + '/node_modules'],
+        modules: [__dirname + '/node_modules'],
         alias: {
             'xtag': __dirname + '/node_modules/x-tag',
             'jquery': __dirname + '/node_modules/jquery',
@@ -51,7 +49,6 @@ module.exports = {
             'router': __dirname + '/lib/router.js',
             'dispatcher': __dirname + '/lib/dispatcher.js',
             'tag': __dirname + '/lib/tag.js',
-            'material': __dirname + '/lib/material.js',
             'swimModule': __dirname + '/lib/module.js',
             'script': __dirname + '/node_modules/scriptjs',
             'dialogPolyfill': __dirname + '/node_modules/dialog-polyfill',
@@ -117,15 +114,14 @@ module.exports = {
             }
         ],
     },
-  plugins: [new webpack.optimize.UglifyJsPlugin({minimize: true}),
-  new webpack.ProvidePlugin({
+    plugins: [
+      new webpack.ProvidePlugin({
             $: 'jquery',
             jQuery: 'jquery',
             Swim: 'swim',
             Recon: 'recon',
             _: '_',
             tag: 'tag',
-            __material__: 'material',
             __swimModule__: 'swimModule',
             __fontawesome__: 'font-awesome',
             Router: 'router',
@@ -140,8 +136,8 @@ module.exports = {
             c3: 'c3',
             debug: 'debug'
         }),
-        new webpack.DllPlugin({
+  new webpack.DllPlugin({
     name: 'swim_platform',
-    path: 'build/platform-manifest.json',
+    path: __dirname + '/build/platform-manifest.json',
   })]
 };
