@@ -109,7 +109,7 @@ module.exports = {
     module: {
         // we're sending all these loaders with this one dev tool install
         loaders: [{
-                test: /\.(jpg|png|gif|jpeg)$/,
+                test: /\.(jpg|svg|png|gif|jpeg)$/,
                 loader: "base64-image-loader"
             },
             {
@@ -121,7 +121,7 @@ module.exports = {
                 loaders: ['style-loader', 'css-loader']
             },
             {
-                test: /\.(html|svg)$/,
+                test: /\.(html)$/,
                 loader: 'html',
                 query: {
                     minimize: true
@@ -137,7 +137,8 @@ module.exports = {
             },
             {
                 test: /\.(woff|woff2|eot|ttf|svg)(\?.*$|$)/,
-                loader: 'file?name=assets/fonts/[name].[ext]'
+                loader: 'file?name=assets/fonts/[name].[ext]',
+                exclude: /components/
             },
             {
                 test: /.js?$/,
