@@ -7,12 +7,14 @@ var path = require('path');
 var BowerWebpackPlugin = require('bower-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
+var GenerateJsonPlugin = require('generate-json-webpack-plugin');
 var projectPackage = require(global.cwd + '/package.json');
 var packageJSON = require('./package.json');
 var staticPath = global.cwd + '/assets';
 
 var plugins = [];
 var copypaths = [];
+var externalConfig = false;
 
 // copy paths for moving files into build directory
 if (fs.existsSync(staticPath)) {
@@ -23,10 +25,10 @@ if (fs.existsSync(staticPath)) {
 }
 
 
-    copypaths.push({
+/*    copypaths.push({
         from: __dirname + '/build/assets',
         to: 'assets'
-    });
+    });*/
     
     copypaths.push({
         from: __dirname + '/build/*.js',
@@ -38,6 +40,11 @@ if (fs.existsSync(staticPath)) {
 // todo: ensure paths in copypaths are not using
 // other plugins like base64
 plugins.push(new CopyWebpackPlugin(copypaths));
+
+if(projectPackage.config) {
+    plugins.push(new GenerateJsonPlugin('assets/config.json', projectPackage.config));
+    externalConfig = true;
+}
 
 module.exports = {
 
@@ -157,9 +164,9 @@ module.exports = {
         // provide accessables to modules
         new webpack.DefinePlugin({
             'app': JSON.stringify({
-                config: projectPackage,
                 corePackages: packageJSON.dependencies,
-                debug: global.debug
+                debug: global.debug,
+                externalConfig: externalConfig
             })
         }),
 

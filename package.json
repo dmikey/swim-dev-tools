@@ -28,6 +28,7 @@
     "edge-css": "git+https://github.com/flavioespinoza/edge-css.git",
     "file-loader": "^0.10.0",
     "font-awesome": "^4.7.0",
+    "generate-json-webpack-plugin": "^0.2.1",
     "html-loader": "^0.4.4",
     "html-webpack-plugin": "^2.26.0",
     "html-webpack-template": "^6.0.1",
