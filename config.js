@@ -164,7 +164,7 @@ module.exports = {
         // provide accessables to modules
         new webpack.DefinePlugin({
             'app': JSON.stringify({
-                corePackages: packageJSON.dependencies,
+                package: packageJSON,
                 debug: global.debug,
                 externalConfig: externalConfig
             })
