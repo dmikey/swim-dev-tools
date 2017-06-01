@@ -100,12 +100,12 @@ function main() {
             return;
         }
 
-        globalConfig.plugins.push(new webpack.optimize.DedupePlugin());
-        globalConfig.plugins.push(new webpack.optimize.OccurenceOrderPlugin());
-        globalConfig.plugins.push(new webpack.optimize.UglifyJsPlugin({
-            mangle: true,
-            sourcemap: true
-        }));
+        // globalConfig.plugins.push(new webpack.optimize.DedupePlugin());
+        // globalConfig.plugins.push(new webpack.optimize.OccurenceOrderPlugin());
+        // globalConfig.plugins.push(new webpack.optimize.UglifyJsPlugin({
+        //    mangle: true,
+        //   sourcemap: true
+        // }));
 
         webpack(globalConfig, function(err, stats) {
             if (err) return handleError(err);
