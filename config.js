@@ -93,6 +93,7 @@ module.exports = {
             'font-awesome': __dirname + '/lib/font-awesome.less',
             'components': global.cwd + '/components',
             'store': global.cwd + '/store',
+            'styles': global.cwd + '/styles',
             'Store': __dirname + '/lib/store.js',
             'moment': __dirname + '/node_modules/moment',
             'Draw': __dirname + '/lib/draw.js',

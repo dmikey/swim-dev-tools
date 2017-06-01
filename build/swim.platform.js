@@ -28526,37 +28526,6 @@ var swim_platform =
 	        clearTimeout(timers[guid]);
 	    }
 	};
-
-	var readyStateCheckInterval = window.setInterval(function () {
-	    //attach a ready state listener to fire off our first updates when the dom is available
-	    if (document.readyState === 'complete') {
-	        window.clearInterval(readyStateCheckInterval);
-	        // Access it later... Yes even after a page refresh!
-	        var Lawnchair = __webpack_require__(13);
-	        var store = new Lawnchair({
-	            name: 'ui_state'
-	        }, function (store) {
-	            store.get('storage', function (me) {
-	                _store = me.storage;
-	            });
-	        });
-	    }
-	}, 10);
-
-	window.addEventListener("unload", function () {
-	    var Lawnchair = __webpack_require__(13);
-	    var store = new Lawnchair({
-	        name: 'ui_state'
-	    }, function (store) {
-
-	        // save ui state store
-	        var me = {
-	            key: 'storage',
-	            storage: _store
-	        };
-	        store.save(me);
-	    });
-	});
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9)))
 
 /***/ }),
