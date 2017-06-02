@@ -103,6 +103,7 @@ module.exports = {
             'd3': __dirname + '/node_modules/d3',
             'utis': __dirname + '/lib/utils.js',
             'c3': __dirname + '/lib/c3.js',
+            'edge': __dirname + '/lib/edge.js',
             'chance': __dirname + '/node_modules/chance',
             'debug': __dirname + '/lib/debug.js',
             'odometer': __dirname + '/lib/odometer.js'

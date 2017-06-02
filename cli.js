@@ -100,8 +100,8 @@ function main() {
             return;
         }
 
-        // globalConfig.plugins.push(new webpack.optimize.DedupePlugin());
-        // globalConfig.plugins.push(new webpack.optimize.OccurenceOrderPlugin());
+        globalConfig.plugins.push(new webpack.optimize.DedupePlugin());
+        globalConfig.plugins.push(new webpack.optimize.OccurenceOrderPlugin());
         // globalConfig.plugins.push(new webpack.optimize.UglifyJsPlugin({
         //    mangle: true,
         //   sourcemap: true
