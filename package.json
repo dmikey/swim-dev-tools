@@ -62,7 +62,9 @@
     "xml-loader": "^1.1.0",
     "zip-folder": "^1.0.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "document-register-element": "^1.5.0"
+  },
   "scripts": {
     "test": "echo \"Success: no test specified\" && exit 0",
     "platform": "webpack --config platform.config.js"

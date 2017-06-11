@@ -100,6 +100,7 @@ module.exports = {
             'Lawnchair': __dirname + '/node_modules/lawnchair',
             'baseApp': global.cwd + '/index.js',
             'uicore': __dirname + '/node_modules/swim-ui-core',
+            'document-register-element': __dirname + '/node_modules/document-register-element',
             'd3': __dirname + '/node_modules/d3',
             'utis': __dirname + '/lib/utils.js',
             'c3': __dirname + '/lib/c3.js',
